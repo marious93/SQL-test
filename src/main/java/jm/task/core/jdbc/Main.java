@@ -4,7 +4,6 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -20,7 +19,9 @@ public class Main {
         for (User user : users) {
             System.out.println(user);
         }
-        a.cleanUsersTable();
-        a.dropUsersTable();
+
+
+     //   a.cleanUsersTable();
+       // a.dropUsersTable();
     }
 }
