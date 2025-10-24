@@ -23,15 +23,6 @@ public class Util {
        }
        return null;
     }
-    public Statement getStatement(Connection con) {
-        try {
-            return con.createStatement();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
     public  SessionFactory getSessionFactory() {
         SessionFactory sessionFactory = null;
         if (sessionFactory == null) {
