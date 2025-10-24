@@ -6,16 +6,18 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
-    static final String url = "jdbc:mysql://localhost:3306/user_db";
-    static final String user = "root";
-    static final String password = "manchester93";
+    private static final String url = "jdbc:mysql://localhost:3306/user_db";
+    private static final String user = "root";
+    private static final String password = "manchester93";
 
 
-    public  Connection getNewConnection()  {
+    public Connection getNewConnection()  {
        try {
            return DriverManager.getConnection(url, user, password);
        } catch (SQLException e) {
@@ -24,7 +26,7 @@ public class Util {
        return null;
     }
     public  SessionFactory getSessionFactory() {
-        SessionFactory sessionFactory = null;
+        SessionFactory sessionFactory=null;
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
@@ -33,7 +35,7 @@ public class Util {
                 settings.put(Environment.URL, url);
                 settings.put(Environment.USER, user);
                 settings.put(Environment.PASS, password);
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MYSQLDialect");
+           //     settings.put(Environment.DIALECT, "org.hibernate.dialect.MYSQLDialect");
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "update");

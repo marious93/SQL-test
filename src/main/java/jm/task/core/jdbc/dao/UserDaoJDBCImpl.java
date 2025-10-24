@@ -8,14 +8,14 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     private final Connection connection = new Util().getNewConnection();
-    static final String dropTable = "DROP TABLE IF EXISTS user";
-    static final String createTable = "CREATE TABLE IF NOT EXISTS user " +
+    private static final String dropTable = "DROP TABLE IF EXISTS User";
+    private static final String createTable = "CREATE TABLE IF NOT EXISTS User " +
             "(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(15)," +
             " lastName VARCHAR(15), age TINYINT)";
-    static final String add = "INSERT INTO user (name, lastName, age) VALUES (?, ?, ?)";
-    static final String deleteUser = "DELETE FROM user WHERE id = ?";
-    static final String getInfo = "SELECT * FROM user";
-    static final String cleanTable = "DELETE FROM user";
+    private static final String add = "INSERT INTO User (name, lastName, age) VALUES (?, ?, ?)";
+    private static final String deleteUser = "DELETE FROM User WHERE id = ?";
+    private static final String getInfo = "SELECT * FROM User";
+    private static final String cleanTable = "DELETE FROM User";
 
     public void createUsersTable() {
         try(Statement statement = connection.createStatement()) {

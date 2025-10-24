@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private SessionFactory sFactory = new Util().getSessionFactory();
+    SessionFactory sFactory = new Util().getSessionFactory();
     static final String create = "CREATE TABLE IF NOT EXISTS User " +
             "(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(15)," +
             " lastName VARCHAR(15), age TINYINT)";
@@ -20,14 +20,21 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        Session session = sFactory.openSession();
-        session.createNativeQuery(create).executeUpdate();
+        try(Session session = sFactory.openSession()){
+            session.beginTransaction();
+            session.createNativeQuery(create).executeUpdate();
+            session.getTransaction().commit();
+        }
+
     }
 
     @Override
     public void dropUsersTable() {
-        Session session = sFactory.openSession();
-        session.createNativeQuery(drop).executeUpdate();
+       try (Session session = sFactory.openSession()) {
+           session.beginTransaction();
+           session.createNativeQuery(drop).executeUpdate();
+           session.getTransaction().commit();
+       }
     }
 
     @Override
@@ -61,8 +68,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         try (Session session = sFactory.openSession()) {
+            session.beginTransaction();
             Query<User> query = session.createQuery(select, User.class);
-            return query.getResultList();
+            List<User> users = query.list();
+            session.getTransaction().commit();
+            return users;
         } catch (Exception e) {
             e.printStackTrace();
         }

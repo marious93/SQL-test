@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "User")
 public class User implements Serializable {
 
     @Id
@@ -31,8 +31,6 @@ public class User implements Serializable {
     }
 
     public User() {}
-
-
 
     @Override
     public String toString() {
