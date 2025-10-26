@@ -29,7 +29,6 @@ public class Main {
         */
 
         UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
-        System.out.println("Connected to database");
       //  dao.createUsersTable();
         dao.saveUser("Name1","lastName1", (byte) 29);
         dao.saveUser("Name2","lastName2", (byte) 15);
