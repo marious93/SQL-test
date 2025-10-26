@@ -4,14 +4,7 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Environment;
-import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
+
 
 import java.sql.SQLException;
 import java.util.List;
@@ -36,20 +29,20 @@ public class Main {
         */
 
         UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
-        System.out.println("Connection is stable");
+        System.out.println("Connected to database");
       //  dao.createUsersTable();
-//        dao.saveUser("Name1","lastName1", (byte) 29);
-//        dao.saveUser("Name2","lastName2", (byte) 15);
-//        dao.saveUser("Name3","lastName3", (byte) 47);
-//        dao.saveUser("Name4","lastName4", (byte) 24);
+        dao.saveUser("Name1","lastName1", (byte) 29);
+        dao.saveUser("Name2","lastName2", (byte) 15);
+        dao.saveUser("Name3","lastName3", (byte) 47);
+        dao.saveUser("Name4","lastName4", (byte) 24);
         List<User> users = dao.getAllUsers();
         for (User user : users) {
             System.out.println(user);
         }
+
+
       //  dao.dropUsersTable();
-    //    dao.cleanUsersTable();
-
-
+       // dao.cleanUsersTable();
 
     }
 }

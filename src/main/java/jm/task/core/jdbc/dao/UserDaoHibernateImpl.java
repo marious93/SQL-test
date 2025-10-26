@@ -5,8 +5,6 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -16,6 +14,7 @@ public class UserDaoHibernateImpl implements UserDao {
             " lastName VARCHAR(15), age TINYINT)";
     static final String drop = "DROP TABLE IF EXISTS User";
     static final String select = "FROM User";
+    static final String delete = "DELETE FROM User";
 
 
     @Override
@@ -42,7 +41,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sFactory.openSession()) {
             session.beginTransaction();
             User user = new User(null, name, lastName, age);
-            session.saveOrUpdate(user);
+            session.save(user);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +54,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.beginTransaction();
             User userToDelete = session.get(User.class, id);
             if (userToDelete != null) {
-                session.delete(userToDelete);
+                session.remove(userToDelete);
             } else {
                 System.out.println("User not found");
             }
@@ -69,8 +68,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public List<User> getAllUsers() {
         try (Session session = sFactory.openSession()) {
             session.beginTransaction();
-            Query<User> query = session.createQuery(select, User.class);
-            List<User> users = query.list();
+            List<User> users = session.createQuery(select, User.class).getResultList();
             session.getTransaction().commit();
             return users;
         } catch (Exception e) {
@@ -82,7 +80,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         try (Session session = sFactory.openSession()) {
-            session.createNativeQuery("TRUNCATE TABLE User").executeUpdate();
+            session.beginTransaction();
+            session.createNativeQuery(delete).executeUpdate();
+            session.getTransaction().commit();
         }
     }
 }

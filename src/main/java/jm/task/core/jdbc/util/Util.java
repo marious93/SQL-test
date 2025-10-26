@@ -35,7 +35,7 @@ public class Util {
                 settings.put(Environment.URL, url);
                 settings.put(Environment.USER, user);
                 settings.put(Environment.PASS, password);
-           //     settings.put(Environment.DIALECT, "org.hibernate.dialect.MYSQLDialect");
+                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
