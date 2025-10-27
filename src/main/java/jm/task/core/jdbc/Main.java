@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-       /* UserDaoJDBCImpl a = new UserDaoJDBCImpl();
+        UserDaoJDBCImpl a = new UserDaoJDBCImpl();
         a.createUsersTable();
         a.saveUser("Name1","lastName1", (byte) 29);
         a.saveUser("Name2","lastName2", (byte) 15);
@@ -26,11 +26,11 @@ public class Main {
         a.cleanUsersTable();
         a.dropUsersTable();
 
-        */
 
-        UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
+
+      /*  UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
         System.out.println("Connected to database");
-      //  dao.createUsersTable();
+        dao.createUsersTable();
         dao.saveUser("Name1","lastName1", (byte) 29);
         dao.saveUser("Name2","lastName2", (byte) 15);
         dao.saveUser("Name3","lastName3", (byte) 47);
@@ -43,6 +43,8 @@ public class Main {
 
       //  dao.dropUsersTable();
        // dao.cleanUsersTable();
+
+       */
 
     }
 }
