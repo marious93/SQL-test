@@ -29,19 +29,20 @@ public class Main {
         */
 
         UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
-      //  dao.createUsersTable();
-        dao.saveUser("Name1","lastName1", (byte) 29);
-        dao.saveUser("Name2","lastName2", (byte) 15);
-        dao.saveUser("Name3","lastName3", (byte) 47);
-        dao.saveUser("Name4","lastName4", (byte) 24);
-        List<User> users = dao.getAllUsers();
-        for (User user : users) {
-            System.out.println(user);
-        }
+        dao.createUsersTable();
+       // dao.saveUser("Name","lastName1", (byte) 29);
+//        dao.saveUser("Name2","lastName2", (byte) 15);
+//        dao.saveUser("Name3","lastName3", (byte) 47);
+//        dao.saveUser("Kim","lastName4", (byte) 24);
+//        List<User> users = dao.getAllUsers();
+//       // dao.removeUserById(64);
+//        for (User user : users) {
+//            System.out.println(user);
+//        }
 
 
       //  dao.dropUsersTable();
-       // dao.cleanUsersTable();
+      //  dao.cleanUsersTable();
 
     }
 }

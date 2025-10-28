@@ -18,7 +18,6 @@ public class Util {
     private static final String USER = "root";
     private static final String PASSWORD = "manchester93";
 
-
     public Connection getNewConnection()  {
        try {
            return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -27,6 +26,7 @@ public class Util {
        }
        return null;
     }
+
     public SessionFactory getSessionFactory() {
         SessionFactory sessionFactory=null;
             try {
