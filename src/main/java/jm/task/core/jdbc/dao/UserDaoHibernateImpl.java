@@ -14,6 +14,7 @@ import java.util.List;
 
 
 public class UserDaoHibernateImpl implements UserDao {
+
     private SessionFactory sFactory = new Util().getSessionFactory();
 
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS User " +
