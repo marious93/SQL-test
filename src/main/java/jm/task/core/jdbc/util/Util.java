@@ -28,7 +28,6 @@ public class Util {
     }
 
     public SessionFactory getSessionFactory() {
-        SessionFactory sessionFactory=null;
             try {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
@@ -44,10 +43,10 @@ public class Util {
                 configuration.addAnnotatedClass(User.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                return configuration.buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        return sessionFactory;
+        return null;
     }
 }
