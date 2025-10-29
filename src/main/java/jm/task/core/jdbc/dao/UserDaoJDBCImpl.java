@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+
     private final Connection connection = new Util().getNewConnection();
 
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS User";
@@ -82,4 +83,4 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    }
+}
