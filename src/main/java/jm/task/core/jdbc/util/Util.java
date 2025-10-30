@@ -14,9 +14,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
+
     private static final String URL = "jdbc:mysql://localhost:3306/user_db";
     private static final String USER = "root";
     private static final String PASSWORD = "manchester93";
+
+    private SessionFactory sessionFactory;
 
     public Connection getNewConnection()  {
        try {
@@ -29,6 +32,7 @@ public class Util {
 
     public SessionFactory getSessionFactory() {
             try {
+                if (sessionFactory == null) {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
@@ -43,7 +47,8 @@ public class Util {
                 configuration.addAnnotatedClass(User.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
-                return configuration.buildSessionFactory(serviceRegistry);
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                return sessionFactory;}
             } catch (Exception e) {
                 e.printStackTrace();
             }

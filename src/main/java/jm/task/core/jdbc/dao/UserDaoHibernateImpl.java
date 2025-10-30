@@ -1,17 +1,17 @@
 package jm.task.core.jdbc.dao;
 
-
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
 
 public class UserDaoHibernateImpl implements UserDao {
 
-    private SessionFactory sFactory =null;
+    private SessionFactory sFactory = new Util().getSessionFactory();
 
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS User " +
             "(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(15)," +
@@ -23,9 +23,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
         try (Session session = sFactory.openSession()) {
             session.beginTransaction();
             session.createNativeQuery(CREATE_TABLE).executeUpdate();
@@ -38,9 +35,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
        try (Session session = sFactory.openSession()) {
            session.beginTransaction();
            session.createNativeQuery(DROP_TABLE).executeUpdate();
@@ -50,49 +44,48 @@ public class UserDaoHibernateImpl implements UserDao {
        }
     }
 
+
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
-        try (Session session = sFactory.openSession()) {
+        Transaction tx = null;
+        try(Session session = sFactory.openSession()) {
             User user = new User(name, lastName, age);
-            session.beginTransaction();
+            tx = session.beginTransaction();
             session.save(user);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
-                e.printStackTrace();
+            tx.rollback();
+            e.printStackTrace();
         }
     }
 
+
     @Override
     public void removeUserById(long id) {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
-        try (Session session = sFactory.openSession())  {
-            session.beginTransaction();
+        Transaction tx = null;
+        try (Session session = sFactory.openSession()){
+            tx=session.beginTransaction();
             User userToDelete = session.get(User.class, id);
             if (userToDelete != null) {
             session.remove(userToDelete);
             }
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         }
     }
 
     @Override
     public List<User> getAllUsers() {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
-        try (Session session = sFactory.openSession()) {
-            session.beginTransaction();
+        Transaction tx = null;
+        try(Session session = sFactory.openSession())  {
+            tx=session.beginTransaction();
             List<User> users = session.createQuery(SELECT, User.class).getResultList();
-            session.getTransaction().commit();
+            tx.commit();
             return users;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         }
         return null;
@@ -100,14 +93,13 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        if (sFactory==null){
-            sFactory = new Util().getSessionFactory();
-        }
+        Transaction tx = null;
         try (Session session = sFactory.openSession()) {
-            session.beginTransaction();
+            tx = session.beginTransaction();
             session.createNativeQuery(DELETE).executeUpdate();
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e){
+            tx.rollback();
             e.printStackTrace();
         }
     }
