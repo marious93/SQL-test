@@ -21,18 +21,18 @@ public class Util {
 
     private SessionFactory sessionFactory;
 
-    public Connection getNewConnection()  {
-       try {
-           return DriverManager.getConnection(URL, USER, PASSWORD);
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-       }
-       return null;
+    public Connection getNewConnection() {
+        try {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
             try {
-                if (sessionFactory == null) {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
@@ -48,10 +48,13 @@ public class Util {
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                return sessionFactory;}
+                return sessionFactory;
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
         return null;
+
     }
 }
